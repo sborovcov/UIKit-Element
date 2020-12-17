@@ -19,12 +19,18 @@ class ViewController: UIViewController, UITableViewDataSource {
         return cell
     }
     
-
+    var count = 0{
+        didSet{
+            updateButton()
+        }
+    }
+    
     @IBOutlet weak var label: UILabel!
     
     @IBOutlet weak var birdImageView: UIImageView!
     @IBOutlet weak var poemTextView: UITextView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var button: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,8 +56,44 @@ class ViewController: UIViewController, UITableViewDataSource {
         //UITableView
         tableView.backgroundColor = .cyan
         tableView.dataSource = self
+        
+        //UIButton
+//        button.setTitle("Count \(count)", for: [])
+        // перенесли строку выше в функцию
+        updateButton()
     }
 
+    func updateButton() {
+        button.setTitle("Count \(count)", for: [])
+    }
 
+    @IBAction func buttonPressed(_ sender: UIButton) {
+//        print(#line, #function)
+        count += 1
+        // [] - значит заголовок выведется для всех состояний кнопки. Конкретное можно задать через .
+        //sender.setTitle("Count \(count)", for: [])
+        // заменим вызов на функцию. sender в функции уже не нужен, так как для кнопки создан outlet
+        //updateButton()
+        //  убрали вызов, потому что у переменной count создали наблюдателя didSet
+    }
+    
+    @IBAction func segmentSelected(_ sender: UISegmentedControl) {
+//        print(#line, #function, sender.selectedSegmentIndex)
+        switch sender.selectedSegmentIndex {
+        case 0:
+            count = 0
+        case 1:
+            count -= 1
+        case 2:
+            count += 1
+        default:
+            fatalError("Unknown index \(sender.selectedSegmentIndex) in \(#line) \(#function)")
+        }
+    }
+   
+  
+    @IBAction func dataEntered(_ sender: UITextField) {
+        print(#line, #function, sender.tag, sender.text ?? "nil")
+    }
 }
 
