@@ -95,5 +95,17 @@ class ViewController: UIViewController, UITableViewDataSource {
     @IBAction func dataEntered(_ sender: UITextField) {
         print(#line, #function, sender.tag, sender.text ?? "nil")
     }
+    
+    @IBAction func sliderValueChanged(_ sender: UISlider) {
+        sender.value = Float(25 * Int(sender.value / 25))// что бы слайдер двигался заданным шагом
+        print(#line, #function, sender.value)
+    }
+    @IBAction func switchToggles(_ sender: UISwitch) {
+        print(#line,#function, sender.isOn)
+        view.backgroundColor = sender.isOn ? .white : .cyan
+    }
+    @IBAction func datePicked(_ sender: UIDatePicker) {
+        print(#line,#function, sender.date)
+    }
 }
 
